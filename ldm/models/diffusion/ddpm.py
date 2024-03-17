@@ -333,7 +333,8 @@ class DDPM(pl.LightningModule):
         loss_dict.update({f'{log_prefix}/loss': loss})
 
         return loss, loss_dict
-
+    
+    #PyTorch 模型的前向传播方法
     def forward(self, x, *args, **kwargs):
         # b, c, h, w, device, img_size, = *x.shape, x.device, self.image_size
         # assert h == img_size and w == img_size, f'height and width of image must be {img_size}'
@@ -387,7 +388,8 @@ class DDPM(pl.LightningModule):
         denoise_grid = rearrange(denoise_grid, 'b n c h w -> (b n) c h w')
         denoise_grid = make_grid(denoise_grid, nrow=n_imgs_per_row)
         return denoise_grid
-
+    
+    #用于记录图像数据和模型生成的图像
     @torch.no_grad()
     def log_images(self, batch, N=8, n_row=2, sample=True, return_keys=None, **kwargs):
         log = dict()
